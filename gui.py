@@ -54,7 +54,14 @@ def action(event):
         else:
             action_dict["num_2"] = get_validated_entry()
             clear_entry()
-            result = calc.sum(action_dict["num_1"], action_dict["num_2"])
+            if event.widget['text'] == "+":
+                result = calc.sum(action_dict["num_1"], action_dict["num_2"])
+            elif event.widget['text'] == "-":
+                result = calc.substraction(action_dict["num_1"], action_dict["num_2"])
+            elif event.widget['text'] == "*":
+                result = calc.multiplication(action_dict["num_1"], action_dict["num_2"])
+            else:
+                result = calc.devision(action_dict["num_1"], action_dict["num_2"])
             entry_field.insert(0, result)
             action_dict['num_1'] = result
         entry_can_be_cleared = True
@@ -79,6 +86,7 @@ button_sqrt.bind('<Button-1>', sqrt)
 button_clear = Button(root_win, text='C', command=lambda : reset_action_dict())
 button_clear.grid(row=1, column=2)
 
+#Creating num buttons dynamicly
 row = 2
 column = 0
 for i in [7, 4, 1,]:
