@@ -1,7 +1,8 @@
-from tkinter import Tk, Entry, Button, W, ALL, END, INSERT, E, Text, StringVar
+from tkinter import Tk, Entry, Button, W, ALL, END, INSERT, E
 from calculator import Calc
 
 root_win = Tk()
+root_win.title("TinyCalc")
 
 calc = Calc()
 
@@ -47,7 +48,6 @@ def sqrt(event):
 
 def calculate_result():
     action_dict["num_2"] = get_validated_entry()
-    clear_entry()
     if action_dict["action"] == "+":
         result = calc.sum(action_dict["num_1"], action_dict["num_2"])
     elif action_dict["action"] == "-":
@@ -56,8 +56,7 @@ def calculate_result():
         result = calc.multiplication(action_dict["num_1"], action_dict["num_2"])
     else:
         result = calc.devision(action_dict["num_1"], action_dict["num_2"])
-    entry_field.insert(0, result)
-    action_dict['num_1'] = result
+    return result
 
 def action(event):
     try:
@@ -67,7 +66,15 @@ def action(event):
             action_dict["num_1"] = get_validated_entry()
             action_dict["action"] = event.widget["text"]
         else:
-            calculate_result()
+            result = calculate_result()
+            clear_entry()
+            if result is None:
+                entry_field.insert(0, "Devision by zero")
+                entry_can_be_cleared = True
+                return
+            else:
+                entry_field.insert(0, result)
+                action_dict['num_1'] = result
         entry_can_be_cleared = True
         action_dict["action"] = event.widget["text"]
     except ValueError:
@@ -93,11 +100,13 @@ button_clear.grid(row=1, column=2)
 #Creating num buttons dynamicly
 row = 2
 column = 0
-for i in [7, 4, 1,]:
+for i in [7, 4, 1, 0]:
     while column != 3:
         button_x = Button(root_win, text=i)
         button_x.grid(row=row, column=column)
         button_x.bind('<Button-1>', insert_in_entry)
+        if i == 0:
+            break
         i += 1
         column += 1
     row += 1
