@@ -91,6 +91,7 @@ for i in [7, 4, 1,]:
     row += 1
     column = 0
 
+#Creating action buttons dynamicly
 row = 2
 for i in ['+', '-', '*', '/']:
     action_button = Button(root_win, text=i)
