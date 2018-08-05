@@ -45,6 +45,20 @@ def sqrt(event):
     except ValueError:
         return
 
+def calculate_result():
+    action_dict["num_2"] = get_validated_entry()
+    clear_entry()
+    if action_dict["action"] == "+":
+        result = calc.sum(action_dict["num_1"], action_dict["num_2"])
+    elif action_dict["action"] == "-":
+        result = calc.substraction(action_dict["num_1"], action_dict["num_2"])
+    elif action_dict["action"] == "*":
+        result = calc.multiplication(action_dict["num_1"], action_dict["num_2"])
+    else:
+        result = calc.devision(action_dict["num_1"], action_dict["num_2"])
+    entry_field.insert(0, result)
+    action_dict['num_1'] = result
+
 def action(event):
     try:
         global action_dict
@@ -53,18 +67,7 @@ def action(event):
             action_dict["num_1"] = get_validated_entry()
             action_dict["action"] = event.widget["text"]
         else:
-            action_dict["num_2"] = get_validated_entry()
-            clear_entry()
-            if action_dict["action"] == "+":
-                result = calc.sum(action_dict["num_1"], action_dict["num_2"])
-            elif action_dict["action"] == "-":
-                result = calc.substraction(action_dict["num_1"], action_dict["num_2"])
-            elif action_dict["action"] == "*":
-                result = calc.multiplication(action_dict["num_1"], action_dict["num_2"])
-            else:
-                result = calc.devision(action_dict["num_1"], action_dict["num_2"])
-            entry_field.insert(0, result)
-            action_dict['num_1'] = result
+            calculate_result()
         entry_can_be_cleared = True
         action_dict["action"] = event.widget["text"]
     except ValueError:
