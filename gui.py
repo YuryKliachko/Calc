@@ -8,6 +8,7 @@ calc = Calc()
 
 action_dict = {}
 
+
 def insert_in_entry(event):
     global entry_can_be_cleared
     if entry_can_be_cleared is True:
@@ -15,13 +16,16 @@ def insert_in_entry(event):
         entry_can_be_cleared = False
     entry_field.insert(INSERT, event.widget['text'])
 
+
 def clear_entry():
     entry_field.delete(0, END)
+
 
 def reset_action_dict():
     global action_dict
     action_dict = {}
-    entry_field.delete(0, END)
+    clear_entry()
+
 
 def get_validated_entry():
     entry = entry_field.get()
@@ -29,6 +33,7 @@ def get_validated_entry():
         return float(entry)
     else:
         return int(entry)
+
 
 def x_2(event):
     try:
@@ -38,6 +43,7 @@ def x_2(event):
     except ValueError:
         return
 
+
 def sqrt(event):
     try:
         num_1 = get_validated_entry()
@@ -46,8 +52,8 @@ def sqrt(event):
     except ValueError:
         return
 
+
 def calculate_result():
-    action_dict["num_2"] = get_validated_entry()
     if action_dict["action"] == "+":
         result = calc.sum(action_dict["num_1"], action_dict["num_2"])
     elif action_dict["action"] == "-":
@@ -58,25 +64,29 @@ def calculate_result():
         result = calc.devision(action_dict["num_1"], action_dict["num_2"])
     return result
 
+
 def action(event):
     try:
         global action_dict
         global entry_can_be_cleared
         if len(action_dict) == 0:
             action_dict["num_1"] = get_validated_entry()
-            action_dict["action"] = event.widget["text"]
         else:
-            result = calculate_result()
+            action_dict["num_2"] = get_validated_entry()
+            result_of_calculation = calculate_result()
             clear_entry()
-            if result is None:
+            if result_of_calculation is None:
                 entry_field.insert(0, "Devision by zero")
                 entry_can_be_cleared = True
                 return
             else:
-                entry_field.insert(0, result)
-                action_dict['num_1'] = result
+                entry_field.insert(0, result_of_calculation)
+                action_dict['num_1'] = result_of_calculation
         entry_can_be_cleared = True
-        action_dict["action"] = event.widget["text"]
+        if event.widget["text"] != "=":
+            action_dict["action"] = event.widget["text"]
+        else:
+            action_dict = {}
     except ValueError:
         return
 
@@ -111,6 +121,14 @@ for i in [7, 4, 1, 0]:
         column += 1
     row += 1
     column = 0
+
+dot_button = Button(root_win, text=".")
+dot_button.grid(row=5, column=1)
+dot_button.bind('<Button-1>', insert_in_entry)
+
+result_button = Button(root_win, text="=")
+result_button.grid(row=5, column=2)
+result_button.bind('<Button-1>', action)
 
 #Creating action buttons dynamicly
 row = 2
