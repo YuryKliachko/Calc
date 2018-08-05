@@ -51,14 +51,15 @@ def action(event):
         global entry_can_be_cleared
         if len(action_dict) == 0:
             action_dict["num_1"] = get_validated_entry()
+            action_dict["action"] = event.widget["text"]
         else:
             action_dict["num_2"] = get_validated_entry()
             clear_entry()
-            if event.widget['text'] == "+":
+            if action_dict["action"] == "+":
                 result = calc.sum(action_dict["num_1"], action_dict["num_2"])
-            elif event.widget['text'] == "-":
+            elif action_dict["action"] == "-":
                 result = calc.substraction(action_dict["num_1"], action_dict["num_2"])
-            elif event.widget['text'] == "*":
+            elif action_dict["action"] == "*":
                 result = calc.multiplication(action_dict["num_1"], action_dict["num_2"])
             else:
                 result = calc.devision(action_dict["num_1"], action_dict["num_2"])
