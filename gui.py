@@ -91,8 +91,11 @@ for i in [7, 4, 1,]:
     row += 1
     column = 0
 
-button_sum = Button(root_win, text='+')
-button_sum.grid(row=2, column=3)
-button_sum.bind('<Button-1>', action)
+row = 2
+for i in ['+', '-', '*', '/']:
+    action_button = Button(root_win, text=i)
+    action_button.grid(row=row, column=3)
+    action_button.bind('<Button-1>', action)
+    row += 1
 
 root_win.mainloop()
