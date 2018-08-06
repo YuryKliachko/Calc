@@ -21,5 +21,3 @@ class Calc():
 
     def square_root(self, num_1):
         return math.sqrt(num_1)
-
-

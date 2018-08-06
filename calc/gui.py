@@ -1,5 +1,5 @@
-from tkinter import Tk, Entry, Button, W, ALL, END, INSERT, E
-from calculator import Calc
+from tkinter import Tk, Entry, Button, END, INSERT
+from calc.calculator import Calc
 
 root_win = Tk()
 root_win.title("TinyCalc")
