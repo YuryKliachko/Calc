@@ -3,6 +3,7 @@ from calc.calculator import Calc
 
 root_win = Tk()
 root_win.title("TinyCalc")
+root_win.config(background='gray95')
 
 calc = Calc()
 
@@ -96,15 +97,15 @@ entry_can_be_cleared = False
 entry_field = Entry(root_win)
 entry_field.grid(row=0, column=0, columnspan=4)
 
-button_raise = Button(root_win, text='x2')
+button_raise = Button(root_win, text='x2', highlightbackground = 'gray95')
 button_raise.grid(row=1, column=0)
 button_raise.bind('<Button-1>', x_2)
 
-button_sqrt = Button(root_win, text='√')
+button_sqrt = Button(root_win, text='√', highlightbackground = 'gray95')
 button_sqrt.grid(row=1, column=1)
 button_sqrt.bind('<Button-1>', sqrt)
 
-button_clear = Button(root_win, text='C', command=lambda : reset_action_dict())
+button_clear = Button(root_win, text='C', command=lambda : reset_action_dict(), highlightbackground = 'gray95')
 button_clear.grid(row=1, column=2)
 
 #Creating num buttons dynamicly
@@ -112,7 +113,7 @@ row = 2
 column = 0
 for i in [7, 4, 1, 0]:
     while column != 3:
-        button_x = Button(root_win, text=i)
+        button_x = Button(root_win, text=i, highlightbackground = 'gray95')
         button_x.grid(row=row, column=column)
         button_x.bind('<Button-1>', insert_in_entry)
         if i == 0:
@@ -122,18 +123,18 @@ for i in [7, 4, 1, 0]:
     row += 1
     column = 0
 
-dot_button = Button(root_win, text=".")
+dot_button = Button(root_win, text=".", highlightbackground = 'gray95')
 dot_button.grid(row=5, column=1)
 dot_button.bind('<Button-1>', insert_in_entry)
 
-result_button = Button(root_win, text="=")
+result_button = Button(root_win, text="=", highlightbackground = 'gray95')
 result_button.grid(row=5, column=2)
 result_button.bind('<Button-1>', action)
 
 #Creating action buttons dynamicly
 row = 2
 for i in ['+', '-', '*', '/']:
-    action_button = Button(root_win, text=i)
+    action_button = Button(root_win, text=i, highlightbackground = 'gray95')
     action_button.grid(row=row, column=3)
     action_button.bind('<Button-1>', action)
     row += 1
